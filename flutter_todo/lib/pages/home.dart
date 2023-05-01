@@ -8,14 +8,34 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String userToDo = ' ';
+  String userToDo = '';
   List toDo = [];
 
   @override
   void initState() {
     super.initState();
-
     toDo.addAll(['Nopirkt pienu', 'Nomazgat traukus', 'Uzrakstit kodu']);
+  }
+
+  void _menuOpen() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (BuildContext context) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Menju'),
+        ),
+        body: Row(
+          children: [
+            ElevatedButton(onPressed: () {
+              Navigator.pop(context);
+              Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+            }, child: Text('Naa glvnuju')),
+            Padding(padding: EdgeInsets.only(left: 15)),
+            Text('Vienkarsi menu')
+          ],
+        ),
+      );
+    }));
   }
 
   @override
@@ -25,9 +45,11 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text(
           'Lists To Do',
-          style: TextStyle(fontSize: 50),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(onPressed: _menuOpen, icon: Icon(Icons.menu_outlined))
+        ],
       ),
       body: ListView.builder(
           itemCount: toDo.length,
